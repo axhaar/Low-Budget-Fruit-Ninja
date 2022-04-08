@@ -9,7 +9,7 @@ fruits = ['melon', 'orange', 'pomegranate', 'guava', 'bomb']    #entities in the
 # initialize pygame and create window
 WIDTH = 800
 HEIGHT = 500
-FPS = 15                                                 #controls how often the gameDisplay should refresh. In our case, it will refresh every 1/12th second
+FPS = 13.5                                                #controls how often the gameDisplay should refresh. In our case, it will refresh every 1/12th second
 pygame.init()
 pygame.display.set_caption('Low Budget Fruit-Ninja')
 gameDisplay = pygame.display.set_mode((WIDTH, HEIGHT))   #setting game display size
@@ -21,10 +21,11 @@ BLACK = (0,0,0)
 RED = (255,0,0)
 GREEN = (0,255,0)
 BLUE = (0,0,255)
+YELLOW = (255,255,0)
 
 background = pygame.image.load('images/background.jpg')                                  #game background
 font = pygame.font.Font(os.path.join(os.getcwd(), 'font.otf'), 42)
-score_text = font.render('Score : ' + str(score), True, (255, 255, 255))    #score display
+score_text = font.render('Score : ' + str(score), True, (255, 255, 255))    #score display    
 lives_icon = pygame.image.load('images/white_lives.png')                    #images that shows remaining lives
 
 # Generalized structure of the fruit Dictionary
@@ -58,7 +59,10 @@ def hide_cross_lives(x, y):
 font_name = pygame.font.match_font('font.otf')
 def draw_text(display, text, size, x, y):
     font = pygame.font.Font(font_name, size)
-    text_surface = font.render(text, True, WHITE)
+    if text == "axhaar ©":
+        text_surface = font.render(text, True, YELLOW)
+    else:
+        text_surface = font.render(text, True, WHITE)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     gameDisplay.blit(text_surface, text_rect)
@@ -81,6 +85,7 @@ def show_gameover_screen():
         draw_text(gameDisplay,"Score : " + str(score), 50, WIDTH / 2, HEIGHT /2)
 
     draw_text(gameDisplay, "Press a key to begin!", 64, WIDTH / 2, HEIGHT * 3 / 4)
+    draw_text(gameDisplay, "axhaar ©", 28, WIDTH / 1.1, HEIGHT / 1.07)
     pygame.display.flip()
     waiting = True
     while waiting:
@@ -113,6 +118,7 @@ while game_running :
     gameDisplay.blit(background, (0, 0))
     gameDisplay.blit(score_text, (0, 0))
     draw_lives(gameDisplay, 690, 5, player_lives, 'images/red_lives.png')
+    draw_text(gameDisplay, "axhaar ©", 28, WIDTH / 1.1, HEIGHT / 1.07)
 
     for key, value in data.items():
         if value['throw']:
@@ -133,14 +139,13 @@ while game_running :
                 if key == 'bomb':
                     player_lives -= 1
                     if player_lives == 0:
-                        
                         hide_cross_lives(690, 15)
                     elif player_lives == 1 :
                         hide_cross_lives(725, 15)
                     elif player_lives == 2 :
                         hide_cross_lives(760, 15)
                     #if the user clicks bombs for three time, GAME OVER message should be displayed and the window should be reset
-                    if player_lives < 0 :
+                    if player_lives <= 0 :
                         show_gameover_screen()
                         game_over = True
 
