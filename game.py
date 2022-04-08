@@ -64,4 +64,20 @@ def draw_lives(display, x, y, lives, image) :
 def hide_cross_lives(x, y):
     gameDisplay.blit(pygame.image.load("images/red_lives.png"), (x, y))
 
+def show_gameover_screen():
+    gameDisplay.blit(background, (0,0))
+    draw_text(gameDisplay, "FRUIT NINJA!", 64, WIDTH / 2, HEIGHT / 4)
+    if not game_over :
+        draw_text(gameDisplay,"Score : " + str(score), 40, WIDTH / 2, 250)
+    draw_text(gameDisplay, "Press a key to begin!", 24, WIDTH / 2, HEIGHT * 3 / 4)
+    pygame.display.flip()
+    waiting = True
+    while waiting:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.KEYUP:
+                waiting = False
+
 pygame.quit()
