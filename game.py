@@ -41,6 +41,7 @@ def generate_random_fruits(fruit):
         data[fruit]['throw'] = True
     else:
         data[fruit]['throw'] = False
+
 data = {}
 for fruit in fruits:
     generate_random_fruits(fruit)
@@ -52,5 +53,15 @@ def draw_text(display, text, size, x, y):
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     gameDisplay.blit(text_surface, text_rect)
+
+def draw_lives(display, x, y, lives, image) :
+    for i in range(lives) :
+        img = pygame.image.load(image)
+        img_rect = img.get_rect()      
+        img_rect.x = int(x + 35 * i)   
+        img_rect.y = y                 
+        display.blit(img, img_rect)
+def hide_cross_lives(x, y):
+    gameDisplay.blit(pygame.image.load("images/red_lives.png"), (x, y))
 
 pygame.quit()
