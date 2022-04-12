@@ -93,6 +93,7 @@ def show_gameover_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
             if event.type == pygame.KEYUP:
                 waiting = False
 
